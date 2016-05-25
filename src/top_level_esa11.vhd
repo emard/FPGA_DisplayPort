@@ -61,7 +61,8 @@ entity top_level_esa11 is
     port ( 
         --clk100              : in    std_logic;        
         i_100MHz_N, i_100MHz_P: in    std_logic;
-        debug               : out   std_logic_vector(7 downto 0) := (others => '0');
+        --debug               : out   std_logic_vector(7 downto 0) := (others => '0');
+        led: out std_logic_vector(7 downto 0) := (others => '0');
         ------------------------------
         gtptxp          : out   std_logic_vector(1 downto 0);
         gtptxn          : out   std_logic_vector(1 downto 0);    
@@ -192,8 +193,6 @@ architecture Behavioral of top_level_esa11 is
     ---------------------------------------------
     -- Transceiver signals
     ---------------------------------------------
-    signal txresetdone      : std_logic := '0';
-    signal txoutclk         : std_logic := '0';
     signal symbolclk        : std_logic := '0';
     
     signal tx_running       : std_logic_vector(3 downto 0) := (others => '0');
@@ -212,7 +211,9 @@ architecture Behavioral of top_level_esa11 is
     ------------------------------------------------
     signal tx_debug        : std_logic_vector(7 downto 0);
     signal mgmt_debug:std_logic_vector(7 downto 0);
-   
+    signal clk_blinky, refclk0_blinky, refclk1_blinky: unsigned(25 downto 0);
+    signal refclk0, refclk1: std_logic;
+
     constant source_channel_count : std_logic_vector(2 downto 0) := "010";
     signal stream_channel_count : std_logic_vector(2 downto 0) := "000";
     signal test_signal_ready      : std_logic;
@@ -236,7 +237,6 @@ port map (
    IB   => i_100MHz_N, -- Diff_n buffer input (connect directly to top-level port)
    O    => clk100      -- single ended clock output
 );
-
 
 i_channel_management: channel_management
         GENERIC MAP
@@ -317,10 +317,38 @@ i_tx0: Transceiver generic map (
 
 
 --    debug(0) <= tx_link_established; 
-    debug(0) <= mgmt_debug(0);
+--    debug(0) <= mgmt_debug(0);
 --   debug(0) <= tx_clock_train;
 
-   
+    --clock_blinkie
+    process(clk100)
+    begin
+      if rising_edge(clk100) then
+        clk_blinky <= clk_blinky + 1;
+      end if;
+    end process;
+
+    process(tx_debug(0))
+    begin
+      if rising_edge(tx_debug(0)) then
+        refclk0_blinky <= refclk0_blinky + 1;
+      end if;
+    end process;
+
+    process(tx_debug(1))
+    begin
+      if rising_edge(tx_debug(1)) then
+        refclk1_blinky <= refclk1_blinky + 1;
+      end if;
+    end process;
+
+    led(0) <= tx_running(0);
+    led(1) <= tx_link_established;
+    led(2) <= tx_clock_train;
+    led(4) <= refclk0_blinky(25);
+    led(5) <= refclk1_blinky(25);
+    led(7) <= clk_blinky(25);
+
 --process(symbolclk)
 --   begin
 --   

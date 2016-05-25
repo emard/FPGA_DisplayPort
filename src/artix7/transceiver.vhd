@@ -188,6 +188,9 @@ I_IBUFDS_GTE2_1 : IBUFDS_GTE2
         IB              => 	refclk1_n
     );
 
+debug(0) <= refclk0;
+debug(1) <= refclk1;
+
 gtpe2_common_i : GTPE2_COMMON
     generic map
     (
