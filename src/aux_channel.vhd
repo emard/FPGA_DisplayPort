@@ -56,6 +56,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity aux_channel is
+        generic (
+           C_aux_generic: boolean := false
+        );
 		port ( 
 		   clk                 : in    std_logic;
 		   debug_pmod          : out   std_logic_vector(7 downto 0);
@@ -142,6 +145,9 @@ architecture arch of aux_channel is
 	end component;
 
 	component aux_interface is
+	   generic (
+	       C_aux_generic: boolean := false
+	    );
         port ( 
            clk          : in    std_logic;
 		   debug_pmod   : out   std_logic_vector(7 downto 0);
@@ -209,7 +215,11 @@ i_aux_messages: dp_aux_messages port map (
 		   aux_tx_data  => aux_tx_data
 		 );
 
-i_channel: aux_interface port map ( 
+i_channel: aux_interface
+    generic map (
+        C_aux_generic => C_aux_generic
+    )
+    port map (
 		   clk         => clk,
 		   debug_pmod  => debug_pmod_i, 
 		   ------------------------------

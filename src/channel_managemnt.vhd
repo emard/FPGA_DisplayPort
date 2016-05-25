@@ -54,6 +54,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity channel_management is
+    Generic (
+        C_aux_generic: boolean := false
+    );
     Port ( clk100   : in  STD_LOGIC;
            debug    : out std_logic_vector(7 downto 0);
 
@@ -133,9 +136,12 @@ architecture Behavioral of channel_management is
                swing_0p4   : out STD_LOGIC;
                swing_0p6   : out STD_LOGIC;
                swing_0p8   : out STD_LOGIC);
-    end component;
-    
+   end component;
+
    component aux_channel is
+      generic (
+         C_aux_generic: boolean := false
+      );
       port ( 
          clk                 : in    std_logic;
          debug_pmod          : out   std_logic_vector(7 downto 0);
@@ -334,7 +340,11 @@ i_hotplug_decode: hotplug_decode port map (
         irq     => hpd_irq,
         present => hpd_present);
 
-i_aux_channel: aux_channel port map ( 
+i_aux_channel: aux_channel
+    generic map (
+         C_aux_generic => C_aux_generic
+    )
+    port map (
 		   clk             => clk100,
 		   debug_pmod      => debug,
 		   ------------------------------

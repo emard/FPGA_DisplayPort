@@ -62,6 +62,9 @@ Library UNISIM;
 use UNISIM.vcomponents.all;
 
 entity aux_interface is
+    generic (
+        C_aux_generic: boolean := false
+    );
     port ( 
        clk          : in    std_logic;
        debug_pmod   : out   std_logic_vector(7 downto 0);
@@ -140,6 +143,19 @@ architecture arch of aux_interface is
     signal rx_raw      : std_logic := '0'; 
     signal rx_finished : std_logic := '0'; 
     signal rx_holdoff  : std_logic_vector(9 downto 0) :=(others => '0');
+
+	COMPONENT iobufds_generic
+      GENERIC
+      (
+        C_aux_generic: boolean := false -- true: use GPIO instead of dedicated differential pair for dp_aux_* ports
+      );
+	  PORT(
+         I       : in    STD_LOGIC;
+         O       : out   STD_LOGIC;
+         IO, IOB : inout STD_LOGIC; -- differential endpoint
+         T       : in    STD_LOGIC  -- 3-state control '1'-IO/IOB=input '0'-IO/IOB=output
+	  );
+	END COMPONENT;
 begin
     debug_pmod(3 downto 0) <= "000" & snoop;
     
@@ -335,6 +351,7 @@ clk_proc: process(clk)
 		end if;
 	end process;
 
+G_vendor_differential_tx: if not C_aux_generic generate
 i_IOBUFDS_0 : IOBUFDS
        generic map (
           DIFF_TERM => TRUE,
@@ -348,6 +365,18 @@ i_IOBUFDS_0 : IOBUFDS
           I   => serial_data,
           T   => tristate
        );
+end generate; -- G_vendor_differential_tx
+
+G_generic_differential_tx: if C_aux_generic generate
+i_IOBUFDS_0 : iobufds_generic
+       port map (
+          O   => rx_raw,
+          IO  => dp_tx_aux_p,
+          IOB => dp_tx_aux_n,
+          I   => serial_data,
+          T   => tristate
+       );
+end generate; -- G_generic_differential_tx
 
 rx_proc: process(clk)
     begin
@@ -463,7 +492,8 @@ rx_proc: process(clk)
             end if;
         end if;
     end process;
-    
+
+G_vendor_differential_rx: if not C_aux_generic generate
 -- Stub off the unused inputs
 i_IOBUFDS_1 : IOBUFDS
       generic map (
@@ -478,5 +508,6 @@ i_IOBUFDS_1 : IOBUFDS
          I   => '0',
          T   => '1'
       );
+end generate; -- G_vendor_differential_rx
 
 end architecture;

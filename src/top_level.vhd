@@ -79,9 +79,13 @@ architecture Behavioral of top_level is
    constant use_hw_8b10b_support : std_logic := '1'; -- Note HW 8b/10b not yet working for SPartan 6
 
 	COMPONENT channel_management
-	PORT(
+      GENERIC
+      (
+        C_aux_generic: boolean := false -- true: use GPIO instead of dedicated differential pair for dp_aux_* ports
+      );
+	  PORT(
 		clk100               : IN std_logic;
-      debug                : out std_logic_vector(7 downto 0);
+        debug                : out std_logic_vector(7 downto 0);
 		hpd                  : IN std_logic;
 		stream_channel_count : IN std_logic_vector(2 downto 0);
 		source_channel_count : IN std_logic_vector(2 downto 0);
@@ -99,8 +103,8 @@ architecture Behavioral of top_level is
 		tx_swing_0p4         : OUT std_logic;
 		tx_swing_0p6         : OUT std_logic;
 		tx_swing_0p8         : OUT std_logic;
-      tx_link_established  : OUT std_logic
-		);
+        tx_link_established  : OUT std_logic
+      );
 	END COMPONENT;
 
     component test_source is
@@ -214,7 +218,12 @@ architecture Behavioral of top_level is
 
 begin
 
-i_channel_management: channel_management PORT MAP(
+i_channel_management: channel_management
+        GENERIC MAP
+        (
+            C_aux_generic => true -- true: use GPIO instead of dedicated differential pair for dp_aux_* ports
+        )
+        PORT MAP(
 		clk100               => clk100,
         debug                => mgmt_debug,
 		hpd                  => dp_tx_hp_detect,
