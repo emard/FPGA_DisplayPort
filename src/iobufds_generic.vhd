@@ -34,6 +34,6 @@ begin
   IO  <=     I when T='0' else 'Z';
   IOB <= not I when T='0' else 'Z';
   
-  O <= IO; -- simplest, ignores IOB input, might be sufficient
-  -- O <= IO and (IO xor IOB); -- '1' only when both pairs are different, else '0'
+  -- O <= IO; -- simplest, ignores IOB input, might be sufficient
+  O <= IO and (IO xor IOB); -- '1' only when both pairs are different, else '0'
 end Behavioral;
