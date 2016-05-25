@@ -368,6 +368,10 @@ i_IOBUFDS_0 : IOBUFDS
 end generate; -- G_vendor_differential_tx
 
 G_generic_differential_tx: if C_aux_generic generate
+-- warning iobufds_generic differential buffer doesn't
+-- have termination resistor which original iobufds driver has
+-- when DIFF_TERM => TRUE
+-- see also http://www.xilinx.com/support/answers/43989.html
 i_IOBUFDS_0 : iobufds_generic
        port map (
           O   => rx_raw,
