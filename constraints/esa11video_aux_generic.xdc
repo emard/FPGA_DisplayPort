@@ -1,7 +1,3 @@
-##Clock Signal
-#set_property -dict {PACKAGE_PIN R4 IOSTANDARD LVCMOS25} [get_ports clk100]
-#create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports clk100]
-
 #
 #	System Clock for ESA11
 #
