@@ -64,7 +64,7 @@ entity top_level_esa11 is
         --debug               : out   std_logic_vector(7 downto 0) := (others => '0');
         led: out std_logic_vector(2 downto 0) := (others => '0');
         ------------------------------
-        DP_135MHZ_P, DP_135MHZ_N: in STD_LOGIC;
+        DP_135MHz_P, DP_135MHz_N: in STD_LOGIC;
         DP_LANE_P, DP_LANE_N: out std_logic_vector(1 downto 0);
         DP_AUX_P, DP_AUX_N: inout std_logic;
         DP_HPD: in std_logic
@@ -237,10 +237,10 @@ architecture Behavioral of top_level_esa11 is
 
 begin
 
-  refclk0_p <= DP_135MHZ_P;
-  refclk0_n <= DP_135MHZ_N;
-  refclk1_p <= DP_135MHZ_P;
-  refclk1_n <= DP_135MHZ_N;
+  refclk0_p <= DP_135MHz_P;
+  refclk0_n <= DP_135MHz_N;
+  refclk1_p <= DP_135MHz_P;
+  refclk1_n <= DP_135MHz_N;
 
   i_clk_diff_to_1end: IBUFDS
 --generic map (

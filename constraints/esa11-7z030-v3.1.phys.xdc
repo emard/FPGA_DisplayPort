@@ -9,8 +9,8 @@
 #	Clock & Reset (33Mhz on PS)
 #
 #set_property -dict {PACKAGE_PIN F16 IOSTANDARD LVTTL} [get_ports 33.333MHZ]
-set_property -dict {PACKAGE_PIN Y15 IOSTANDARD LVTTL} [get_ports i_100MHZ_N]
-set_property -dict {PACKAGE_PIN Y14 IOSTANDARD LVTTL} [get_ports i_100MHZ_P]
+set_property -dict {PACKAGE_PIN Y15 IOSTANDARD LVDS_25} [get_ports i_100MHz_N]
+set_property -dict {PACKAGE_PIN Y14 IOSTANDARD LVDS_25} [get_ports i_100MHz_P]
 #set_property -dict {PACKAGE_PIN B18 IOSTANDARD LVTTL} [get_ports PON_RESET_N]
 
 #
@@ -32,7 +32,7 @@ set_property -dict {PACKAGE_PIN Y14 IOSTANDARD LVTTL} [get_ports i_100MHZ_P]
 #
 set_property -dict {PACKAGE_PIN G7 IOSTANDARD LVCMOS18} [get_ports {led[0]}]
 set_property -dict {PACKAGE_PIN J6 IOSTANDARD LVCMOS18} [get_ports {led[1]}]
-set_property -dict {PACKAGE_PIN V15 IOSTANDARD LVCMOS18} [get_ports {led[2]}]
+set_property -dict {PACKAGE_PIN V15 IOSTANDARD LVTTL} [get_ports {led[2]}]
 
 #
 #	Ethernet on PS
@@ -55,14 +55,15 @@ set_property -dict {PACKAGE_PIN V15 IOSTANDARD LVCMOS18} [get_ports {led[2]}]
 #
 #	EXPMODs
 #
-#set_property -dict {PACKAGE_PIN AA14 IOSTANDARD LVTTL} [get_ports {EXPMOD1[1]}]
-#set_property -dict {PACKAGE_PIN AB12 IOSTANDARD LVTTL} [get_ports {EXPMOD1[2]}]
-#set_property -dict {PACKAGE_PIN Y12 IOSTANDARD LVTTL} [get_ports {EXPMOD1[3]}]
-#set_property -dict {PACKAGE_PIN AA12 IOSTANDARD LVTTL} [get_ports {EXPMOD1[4]}]
-#set_property -dict {PACKAGE_PIN AB11 IOSTANDARD LVTTL} [get_ports {EXPMOD1[5]}]
-#set_property -dict {PACKAGE_PIN AB13 IOSTANDARD LVTTL} [get_ports {EXPMOD1[6]}]
-#set_property -dict {PACKAGE_PIN AA11 IOSTANDARD LVTTL} [get_ports {EXPMOD1[7]}]
-#set_property -dict {PACKAGE_PIN AB14 IOSTANDARD LVTTL} [get_ports {EXPMOD1[8]}]
+#set_property -dict {PACKAGE_PIN AA14 IOSTANDARD LVTTL} [get_ports {debug[0]}]
+#set_property -dict {PACKAGE_PIN AB12 IOSTANDARD LVTTL} [get_ports {debug[1]}]
+#set_property -dict {PACKAGE_PIN Y12 IOSTANDARD LVTTL} [get_ports {debug[2]}]
+#set_property -dict {PACKAGE_PIN AA12 IOSTANDARD LVTTL} [get_ports {debug[3]}]
+#set_property -dict {PACKAGE_PIN AB11 IOSTANDARD LVTTL} [get_ports {debug[4]}]
+#set_property -dict {PACKAGE_PIN AB13 IOSTANDARD LVTTL} [get_ports {debug[5]}]
+#set_property -dict {PACKAGE_PIN AA11 IOSTANDARD LVTTL} [get_ports {debug[6]}]
+#set_property -dict {PACKAGE_PIN AB14 IOSTANDARD LVTTL} [get_ports {debug[7]}]
+
 #set_property -dict {PACKAGE_PIN Y19 IOSTANDARD LVTTL} [get_ports {EXPMOD2[1]}]
 #set_property -dict {PACKAGE_PIN V11 IOSTANDARD LVTTL} [get_ports {EXPMOD2[2]}]
 #set_property -dict {PACKAGE_PIN W12 IOSTANDARD LVTTL} [get_ports {EXPMOD2[3]}]
@@ -105,11 +106,11 @@ set_property -dict {PACKAGE_PIN V15 IOSTANDARD LVCMOS18} [get_ports {led[2]}]
 #
 #	Displayport
 #
-set_property -dict {PACKAGE_PIN  V9 IOSTANDARD LVDS} [get_ports DP_135MHZ_N]
-set_property -dict {PACKAGE_PIN  U9 IOSTANDARD LVDS} [get_ports DP_135MHZ_P]
-set_property -dict {PACKAGE_PIN  R4 IOSTANDARD LVDS} [get_ports DP_AUX_N]
-set_property -dict {PACKAGE_PIN  R5 IOSTANDARD LVDS} [get_ports DP_AUX_P]
-set_property -dict {PACKAGE_PIN W16 IOSTANDARD LVCMOS18} [get_ports DP_HPD]
+set_property -dict {PACKAGE_PIN  V9 } [get_ports DP_135MHz_N]
+set_property -dict {PACKAGE_PIN  U9 } [get_ports DP_135MHz_P]
+set_property -dict {PACKAGE_PIN  R4 IOSTANDARD LVDS_18} [get_ports DP_AUX_N]
+set_property -dict {PACKAGE_PIN  R5 IOSTANDARD LVDS_18} [get_ports DP_AUX_P]
+set_property -dict {PACKAGE_PIN W16 IOSTANDARD LVTTL} [get_ports DP_HPD]
 set_property -dict {PACKAGE_PIN AB3 IOSTANDARD LVDS} [get_ports {DP_LANE_N[0]}]
 set_property -dict {PACKAGE_PIN AA3 IOSTANDARD LVDS} [get_ports {DP_LANE_P[0]}]
 set_property -dict {PACKAGE_PIN  Y4 IOSTANDARD LVDS} [get_ports {DP_LANE_N[1]}]
