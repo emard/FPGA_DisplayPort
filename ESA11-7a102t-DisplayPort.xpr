@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Product Version: Vivado v2016.1 (64-bit)              -->
+<!-- Product Version: Vivado v2016.2 (64-bit)              -->
 <!--                                                         -->
 <!-- Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="12" Path="/home/guest/src/fpga/displayport/FPGA_DisplayPort/ESA11-DisplayPort.xpr">
+<Project Version="7" Minor="14" Path="/home/guest/src/fpga/displayport/FPGA_DisplayPort/ESA11-7a102t-DisplayPort.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="cea41044279644a4b37a5c2fe4af772a"/>
@@ -170,7 +170,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/src/top_level_esa11.vhd">
+      <File Path="$PPRDIR/src/top_level_esa11-7a102t.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
