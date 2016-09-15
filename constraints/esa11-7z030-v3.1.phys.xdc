@@ -106,21 +106,21 @@ set_property -dict {PACKAGE_PIN V15 IOSTANDARD LVTTL} [get_ports {led[2]}]
 #
 #	Displayport
 #
-set_property -dict {PACKAGE_PIN  V9 } [get_ports DP_135MHz_N]
-set_property -dict {PACKAGE_PIN  U9 } [get_ports DP_135MHz_P]
-set_property -dict {PACKAGE_PIN  R4 IOSTANDARD LVDS_18} [get_ports DP_AUX_N]
-set_property -dict {PACKAGE_PIN  R5 IOSTANDARD LVDS_18} [get_ports DP_AUX_P]
-set_property -dict {PACKAGE_PIN W16 IOSTANDARD LVTTL} [get_ports DP_HPD]
-set_property -dict {PACKAGE_PIN AB3 IOSTANDARD LVDS} [get_ports {DP_LANE_N[0]}]
-set_property -dict {PACKAGE_PIN AA3 IOSTANDARD LVDS} [get_ports {DP_LANE_P[0]}]
-set_property -dict {PACKAGE_PIN  Y4 IOSTANDARD LVDS} [get_ports {DP_LANE_N[1]}]
-set_property -dict {PACKAGE_PIN  W4 IOSTANDARD LVDS} [get_ports {DP_LANE_P[1]}]
+set_property -dict {PACKAGE_PIN  V9 } [get_ports refclk0_n]
+set_property -dict {PACKAGE_PIN  U9 } [get_ports refclk0_p]
+set_property -dict {PACKAGE_PIN  R4 IOSTANDARD LVCMOS18 } [get_ports DP_AUX_N]
+set_property -dict {PACKAGE_PIN  R5 IOSTANDARD LVCMOS18 } [get_ports DP_AUX_P]
+set_property -dict {PACKAGE_PIN W16 IOSTANDARD LVTTL} [get_ports dp_tx_hp_detect]
+set_property -dict {PACKAGE_PIN AB3 } [get_ports {gtptxn[0]}]
+set_property -dict {PACKAGE_PIN AA3 } [get_ports {gtptxp[0]}]
+set_property -dict {PACKAGE_PIN  Y4 } [get_ports {gtptxn[1]}]
+set_property -dict {PACKAGE_PIN  W4 } [get_ports {gtptxp[1]}]
 
 #
 #	USB type C onnector
 #
-#set_property -dict {PACKAGE_PIN V5 IOSTANDARD LVTTL} [get_ports USBC_135MHZ_N]
-#set_property -dict {PACKAGE_PIN U5 IOSTANDARD LVTTL} [get_ports USBC_135MHZ_P]
+set_property -dict {PACKAGE_PIN V5 } [get_ports refclk1_n]
+set_property -dict {PACKAGE_PIN U5 } [get_ports refclk1_p]
 #set_property -dict {PACKAGE_PIN AB9 IOSTANDARD LVTTL} [get_ports USBC_RX1_N]
 #set_property -dict {PACKAGE_PIN AA9 IOSTANDARD LVTTL} [get_ports USBC_RX1_P]
 #set_property -dict {PACKAGE_PIN Y6 IOSTANDARD LVTTL} [get_ports USBC_RX2_N]
@@ -198,3 +198,16 @@ set_property -dict {PACKAGE_PIN  W4 IOSTANDARD LVDS} [get_ports {DP_LANE_P[1]}]
 #set_property -dict {PACKAGE_PIN F15 IOSTANDARD LVTTL} [get_ports VREF0V9]
 #set_property -dict {PACKAGE_PIN H16 IOSTANDARD LVTTL} [get_ports VTTREF]
 #set_property -dict {PACKAGE_PIN P16 IOSTANDARD LVTTL} [get_ports VTTREF]
+
+#
+#
+#
+create_clock -period 7.407 -name i_tx0/TXOUTCLK -waveform {0.000 3.704} [get_pins {i_tx0/g_tx[0].gtpe2_i/TXOUTCLK}]
+create_clock -period 7.407 -name {i_tx0/g_tx[1].gtpe2_i_n_39} -waveform {0.000 3.704} [get_pins {i_tx0/g_tx[1].gtpe2_i/TXOUTCLKFABRIC}]
+create_clock -period 7.407 -name i_tx0/ref_clk -waveform {0.000 3.704} [get_pins {i_tx0/g_tx[0].gtpe2_i/TXOUTCLKFABRIC}]
+
+
+create_clock -period 7.407 -name i_tx0/PLL0CLK -waveform {0.000 3.704} [get_pins i_tx0/gtpe2_common_i/PLL0OUTCLK]
+create_clock -period 7.407 -name i_tx0/PLL1CLK -waveform {0.000 3.704} [get_pins i_tx0/gtpe2_common_i/PLL1OUTCLK]
+create_clock -period 7.407 -name refclk0_p -waveform {0.000 3.704} [get_ports refclk0_p]
+create_clock -period 7.407 -name refclk1_p -waveform {0.000 3.704} [get_ports refclk1_p]

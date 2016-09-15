@@ -64,10 +64,18 @@ entity top_level_esa11 is
         --debug               : out   std_logic_vector(7 downto 0) := (others => '0');
         led: out std_logic_vector(2 downto 0) := (others => '0');
         ------------------------------
-        DP_135MHz_P, DP_135MHz_N: in STD_LOGIC;
-        DP_LANE_P, DP_LANE_N: out std_logic_vector(1 downto 0);
+        gtptxp          : out   std_logic_vector(1 downto 0);
+        gtptxn          : out   std_logic_vector(1 downto 0);    
+        
+        refclk0_p       : in  STD_LOGIC;
+        refclk0_n       : in  STD_LOGIC;
+        
+        refclk1_p       : in  STD_LOGIC;
+        refclk1_n       : in  STD_LOGIC;
+        
         DP_AUX_P, DP_AUX_N: inout std_logic;
-        DP_HPD: in std_logic
+        
+        dp_tx_hp_detect : in    std_logic
     );
 end top_level_esa11;
 
@@ -195,10 +203,10 @@ architecture Behavioral of top_level_esa11 is
   signal tx_clock_train   : std_logic := '0';
   signal tx_align_train   : std_logic := '0';    
 
-    signal refclk0_p: STD_LOGIC;
-    signal refclk0_n: STD_LOGIC;
-    signal refclk1_p: STD_LOGIC;
-    signal refclk1_n: STD_LOGIC;
+--    signal refclk0_p: STD_LOGIC;
+--    signal refclk0_n: STD_LOGIC;
+--   signal refclk1_p: STD_LOGIC;
+--    signal refclk1_n: STD_LOGIC;
 
     ---------------------------------------------
     -- Transceiver signals
@@ -237,10 +245,10 @@ architecture Behavioral of top_level_esa11 is
 
 begin
 
-  refclk0_p <= DP_135MHz_P;
-  refclk0_n <= DP_135MHz_N;
-  refclk1_p <= DP_135MHz_P;
-  refclk1_n <= DP_135MHz_N;
+--  refclk0_p <= DP_135MHz_P;
+--  refclk0_n <= DP_135MHz_N;
+--  refclk1_p <= DP_135MHz_P;
+--  refclk1_n <= DP_135MHz_N;
 
   i_clk_diff_to_1end: IBUFDS
 --generic map (
@@ -262,7 +270,7 @@ begin
         PORT MAP(
 		clk100               => clk100,
         debug                => mgmt_debug,
-		hpd                  => DP_HPD,
+		hpd                  => dp_tx_hp_detect,
 		aux_tx_p             => DP_AUX_P,
 		aux_tx_n             => DP_AUX_P,
 		aux_rx_p             => open,
@@ -321,8 +329,8 @@ begin
 
        in_symbols      => tx_symbols,
                   
-       gtptxp          => DP_LANE_P,
-       gtptxn          => DP_LANE_N,
+       gtptxp          => gtptxp,
+       gtptxn          => gtptxn,
        symbolclk       => symbolclk,       
 
        refclk0_p       => refclk0_p,
